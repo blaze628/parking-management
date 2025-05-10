@@ -1,0 +1,63 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: #34495e;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+main {
+    max-width: 600px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h2, h3 {
+    color: #34495e;
+}
+
+label, select, button {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background: #34495e;
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+
+button:hover {
+    background: #2c3e50;
+}
+
+.available-slots {
+    margin: 15px 0;
+    padding: 10px;
+    background: #eafaf1;
+    border-left: 5px solid #27ae60;
+    min-height: 30px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background: #34495e;
+    color: white;
+}
