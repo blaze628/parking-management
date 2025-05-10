@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Parking Booking</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Car Parking Booking System</h1>
+    </header>
+
+    <main>
+        <h2>Live Available Slots</h2>
+        <div id="slots" class="available-slots">Loading...</div>
+
+        <h3>Book a Slot</h3>
+        <form id="bookingForm">
+            <label for="slotSelect">Select Slot:</label>
+            <select id="slotSelect"></select><br>
+            <button type="submit">Book Slot</button>
+        </form>
+    </main>
+
+    <footer>&copy; 2025 Car Parking Booking</footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
