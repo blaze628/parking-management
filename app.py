@@ -1,52 +1,26 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, jsonify, request
 
 app = Flask(__name__)
 
-# Dummy data for slots
-slots = {
-    'A1': 'available',
-    'A2': 'available',
-    'A3': 'booked',
-    'A4': 'available',
-    'B1': 'booked',
-    'B2': 'available'
-}
+# Shared parking slots - this will reset if server restarts
+available_slots = ['A1', 'A2', 'A3', 'B1', 'B2', 'C1']
 
-# Home page route
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('index.html')
 
-# Slots availability page
-@app.route('/slots')
-def slots_view():
-    return render_template('slots.html', slots=slots)
+@app.route('/get-slots')
+def get_slots():
+    return jsonify({'slots': available_slots})
 
-# Booking page
-@app.route('/booking', methods=['GET', 'POST'])
-def booking():
-    if request.method == 'POST':
-        slot = request.form['slot']
-        vehicle_number = request.form['vehicle_number']
-        date = request.form['date']
-        
-        # Update slot as booked
-        if slots.get(slot) == 'available':
-            slots[slot] = 'booked'
-            return redirect(url_for('confirmation', slot=slot, vehicle_number=vehicle_number, date=date))
-        else:
-            return "Slot already booked!", 400
-
-    available_slots = [slot for slot, status in slots.items() if status == 'available']
-    return render_template('booking.html', available_slots=available_slots)
-
-# Confirmation page
-@app.route('/confirmation')
-def confirmation():
-    slot = request.args.get('slot')
-    vehicle_number = request.args.get('vehicle_number')
-    date = request.args.get('date')
-    return render_template('confirmation.html', slot=slot, vehicle_number=vehicle_number, date=date)
+@app.route('/book-slot', methods=['POST'])
+def book_slot():
+    data = request.json
+    slot = data.get('slot')
+    if slot in available_slots:
+        available_slots.remove(slot)
+        return jsonify({'status': 'success', 'message': f'Slot {slot} booked'})
+    return jsonify({'status': 'error', 'message': 'Slot not available'})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
