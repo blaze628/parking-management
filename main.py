@@ -1,4 +1,5 @@
 from flask import Flask, render_template, jsonify, request
+import os  # ✅ Import os to read Render's provided PORT
 
 app = Flask(__name__)
 
@@ -22,5 +23,8 @@ def book_slot():
         return jsonify({'status': 'success', 'message': f'Slot {slot} booked'})
     return jsonify({'status': 'error', 'message': 'Slot not available'})
 
+# ✅ Dynamic port binding required by Render
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    port = int(os.environ.get('PORT', 5000))  # Render provides PORT dynamically
+    app.run(host='0.0.0.0', port=port)
+
